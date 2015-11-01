@@ -104,6 +104,15 @@ body {
   border-radius: 50%;
 }
 
-.log-lines { list-style-type: none; margin: 0; padding: 0; }
-.log-lines li { padding: 5px 10px; }
-.log-lines li:nth-child(odd) { background: #eee; }
+#log-lines {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#log-lines li,
+#log-lines p {
+  padding: 5px 10px;
+}
+#log-lines li:nth-child(odd) {
+  background: #eee;
+}
