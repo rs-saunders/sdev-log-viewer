@@ -1,7 +1,7 @@
 {
   "name": "sdev-log-viewer",
   "version": "1.0.0",
-  "description": "Live view of log files",
+  "description": "An app to tail log files",
   "main": "app.js",
   "scripts": {
     "start": "node bin/www",
