@@ -13,6 +13,8 @@
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "morgan": "^1.6.1",
+    "q": "^1.4.1",
+    "slice-file": "^1.0.0",
     "winston": "^2.0.0"
   },
   "devDependencies": {

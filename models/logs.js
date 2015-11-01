@@ -1,7 +1,8 @@
 'use strict';
 
 var fs = require('fs');
-
+var sf = require('slice-file');
+var q = require('q');
 /**
  * returns the log folder to monitor
  *
@@ -28,13 +29,15 @@ var logFolder = getLogFolder();
 
 /**
  * Reads the log directory for list of log files
- * @param callback
+ * @return promise
  */
-module.exports.getLogFolderList = function(callback) {
+module.exports.getLogFolderList = function() {
+
+    var deferred = q.defer();
 
     fs.readdir(logFolder, function (error, files) {
         if (error) {
-            callback(error, []);
+            deferred.reject(error);
         }
 
         var fileList = files.map(function (file) {
@@ -43,7 +46,21 @@ module.exports.getLogFolderList = function(callback) {
             return fs.statSync(logFolder + '/' + file).isFile() && file.split('.').pop() == 'log';
         });
 
-        callback(null, fileList);
+        deferred.resolve(fileList);
     });
+
+    return deferred.promise;
 };
 
+/**
+ * Tails the last nLines of the specified file
+ * piping them to the write stream
+ *
+ * @param {String} file, path of the file to tail
+ * @param {number} nLines, number of lines to return
+ * @param {stream} writeStream , stream to pipe the lines to e.g. response
+ */
+module.exports.tailFile = function(file, nLines, writeStream) {
+    var fs = sf(logFolder + '/' + file);
+    fs.slice(-Math.abs(nLines)).pipe(writeStream);
+};
